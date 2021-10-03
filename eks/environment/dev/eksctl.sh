@@ -31,8 +31,6 @@ if [ -d "~/.ssh" ]
 then
     echo "Directory .ssh exists."
 else
-    echo "Creating a Directory .ssh Directory"
-
     mkdir -p ~/.ssh
 fi
 
