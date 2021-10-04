@@ -35,12 +35,9 @@ else
     mkdir -p ~/.ssh
 fi
 
-if [ -f ~/.ssh/$SSH_KEY_NAME.pem ]
-then
-echo "~/.ssh/$SSH_KEY_NAME.pem already exist"
-else
+
 aws ec2 create-key-pair --key-name $SSH_KEY_NAME --query 'KeyMaterial' --output text > ~/.ssh/$SSH_KEY_NAME.pem
-fi
+
 
 # Eks Cluster Creation
 
