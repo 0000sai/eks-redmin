@@ -27,10 +27,11 @@ PUBLIC_SUBNET_3=`terraform output public-subnet-ids | sed -n 4p | cut -d'"' -f2`
 
 # Creating a key pair for EC2 Workers Nodes
 
-if [ -d "~/.ssh" ]
+if [ -d ~/.ssh ]
 then
     echo "Directory .ssh exists."
 else
+
     mkdir -p ~/.ssh
 fi
 
@@ -60,7 +61,7 @@ eksctl create cluster \
   --asg-access \
   --verbose 3
   
-# aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $REGION
+ aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $REGION
 
 
 # UPDATE YOUR ./kube
