@@ -63,7 +63,7 @@ eksctl create cluster \
   --asg-access \
   --verbose 3
   
- aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $REGION
+# aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $REGION
 
 
 # UPDATE YOUR ./kube
