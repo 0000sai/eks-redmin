@@ -1,10 +1,10 @@
 #!/bin/bash
 
 EKS_CLUSTER_NAME="cloudgeeks-ca-eks"
-EKS_VERSION="1.19"
+EKS_VERSION="1.20"
 REGION="us-east-1"
 NODE_TYPE="t3a.medium"
-TOTAL_NODES="2"
+TOTAL_NODES="1"
 MIN_NODES="1"
 MAX_NOES="2"
 NODE_VOLUME_SIZE_IN_GB="30"
