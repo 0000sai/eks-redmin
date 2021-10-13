@@ -147,6 +147,7 @@ module "redmine-rds" {
   vpc_id                  = module.vpc.vpc-id
 }
 
+    # Note: Terraform Output is engaged because of deploying above Infra, once Infra is deployed Uncomment these mentioned below for deployment or run manually.
 #########################
 # EKS Cluster Deployment
 ##########################
