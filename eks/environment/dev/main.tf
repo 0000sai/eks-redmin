@@ -150,33 +150,33 @@ module "redmine-rds" {
 #########################
 # EKS Cluster Deployment
 ##########################
-resource "null_resource" "eks" {
-  provisioner "local-exec" {
-    command = "bash eksctl.sh"
-  }
-  depends_on = [module.redmine-rds]
-}
+#resource "null_resource" "eks" {
+#  provisioner "local-exec" {
+#    command = "bash eksctl.sh"
+#  }
+#  depends_on = [module.redmine-rds]
+#}
 
 
 ###############################################
 # EKS Rds Secrets Setup from AWS Secret Manager
 ################################################
-resource "null_resource" "eks-secrets-hooked-aws-secret-manager" {
-  provisioner "local-exec" {
-    command = "bash eks-secrets-creation.sh"
-  }
-  depends_on = [null_resource.eks]
-}
+#resource "null_resource" "eks-secrets-hooked-aws-secret-manager" {
+#  provisioner "local-exec" {
+#    command = "bash eks-secrets-creation.sh"
+#  }
+#  depends_on = [null_resource.eks]
+#}
 
 
 #############################
 # EKS ALB Ingress Deployment
 #############################
-resource "null_resource" "eks-alb-ingress-controller" {
-  provisioner "local-exec" {
-    command = "bash alb-ingress.sh"
-  }
-  depends_on = [null_resource.eks]
-}
+#resource "null_resource" "eks-alb-ingress-controller" {
+#  provisioner "local-exec" {
+#    command = "bash alb-ingress.sh"
+#  }
+#  depends_on = [null_resource.eks]
+#}
 
 
