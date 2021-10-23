@@ -1,7 +1,8 @@
 #!/bin/bash
 #Purpose: Setup EBS CSI Driver
 
-AWS_ACCOUNT="738333021806"
+AWS_ACCOUNT="738333021806"   # Update This
+
 
 # https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html
 
