@@ -180,4 +180,16 @@ module "redmine-rds" {
 #  depends_on = [null_resource.eks]
 #}
 
+    
+#############################
+# EKS EBS CSI Driver
+#############################
+#resource "null_resource" "ebs-csi-controller" {
+#  
+#  provisioner "local-exec" {
+#    command = "bash ebs-csi-driver.sh"
+#  }
+#  depends_on = [null_resource.eks]
+#}
+    
 
