@@ -66,8 +66,9 @@
 #aws iam attach-role-policy --policy-arn arn:aws:iam::${AWS_ACCOUNT}:policy/Amazon_EBS_CSI_Driver --role-name ${ROLE_NAME}
 
 
-
-
+###########################
+# Simply Use These Commands
+###########################
 helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
 
 helm repo update
