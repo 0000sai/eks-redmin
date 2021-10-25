@@ -1,7 +1,7 @@
 #!/bin/bash
 #Purpose: Setup EBS CSI Driver
 
-AWS_ACCOUNT="049043308513"          # Update This
+#AWS_ACCOUNT="423019568799"          # Update This
 
 # https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
 
@@ -49,21 +49,21 @@ AWS_ACCOUNT="049043308513"          # Update This
 #
 #EOF
 
-curl -o Amazon_EBS_CSI_Driver.json https://raw.githubusercontent.com/kubernetes-sigs/aws-ebs-csi-driver/v0.9.0/docs/example-iam-policy.json
+#curl -o Amazon_EBS_CSI_Driver.json https://raw.githubusercontent.com/kubernetes-sigs/aws-ebs-csi-driver/v0.9.0/docs/example-iam-policy.json
 
-aws iam create-policy --policy-name Amazon_EBS_CSI_Driver --policy-document file://Amazon_EBS_CSI_Driver.json
+#aws iam create-policy --policy-name Amazon_EBS_CSI_Driver --policy-document file://Amazon_EBS_CSI_Driver.json
 
 
-ROLE_ARN=$(kubectl -n kube-system describe configmap aws-auth | grep "rolearn" | awk '{print $2}')
+#ROLE_ARN=$(kubectl -n kube-system describe configmap aws-auth | grep "rolearn" | awk '{print $2}')
 
-ROLE_NAME=$(kubectl -n kube-system describe configmap aws-auth | grep "rolearn" | awk -F ':' '{print $7}' | cut -f2 -d "/")
+#ROLE_NAME=$(kubectl -n kube-system describe configmap aws-auth | grep "rolearn" | awk -F ':' '{print $7}' | cut -f2 -d "/")
 
 
 # Attach a Policy to a Role
 
 # https://docs.aws.amazon.com/cli/latest/reference/iam/attach-role-policy.html
 
-aws iam attach-role-policy --policy-arn arn:aws:iam::${AWS_ACCOUNT}:policy/Amazon_EBS_CSI_Driver --role-name ${ROLE_NAME}
+#aws iam attach-role-policy --policy-arn arn:aws:iam::${AWS_ACCOUNT}:policy/Amazon_EBS_CSI_Driver --role-name ${ROLE_NAME}
 
 
 
@@ -78,6 +78,6 @@ helm upgrade -install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
     --set controller.serviceAccount.create=true \
     --set controller.serviceAccount.name=ebs-csi-controller-sa
 
-kubectl get all -A
+#kubectl get all -A
 
 # End
