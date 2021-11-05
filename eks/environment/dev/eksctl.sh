@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AWS_ACCOUNT="095936474859"
+
 EKS_CLUSTER_NAME="cloudgeeks-ca-eks"
 EKS_VERSION="1.21"
 REGION="us-east-1"
