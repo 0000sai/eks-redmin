@@ -1,7 +1,7 @@
 #!/bin/bash
 #Purpose: Setup EBS CSI Driver
 
-AWS_ACCOUNT="051367950628"          # Update This
+AWS_ACCOUNT="274736243942"          # Update This
 
 # https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
 

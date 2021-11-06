@@ -84,7 +84,7 @@ module "kms_rds-mysql_key" {
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "rds-mysql-key"
-  alias                   = "alias/readmine"
+  alias                   = "alias/readmines"
   deletion_window_in_days = "10"
 }
 
@@ -115,7 +115,7 @@ module "rds-mysql" {
   deletion-protection                                              = "false"
   vpc-security-group-ids                                           = [module.redmine-rds.aws_security_group_default]
   subnet_ids                                                       = module.vpc.database_subnets
-  db-subnet-group-name                                             = "readmine"
+  db-subnet-group-name                                             = "readmines"
 }
 
 
@@ -146,50 +146,3 @@ module "redmine-rds" {
   security_group_name     = "DBSec"
   vpc_id                  = module.vpc.vpc-id
 }
-
-    # Note: Terraform Output is engaged because of deploying above Infra, once Infra is deployed Uncomment these mentioned below for deployment or run manually.
-#########################
-# EKS Cluster Deployment
-##########################
-#resource "null_resource" "eks" {
-#  provisioner "local-exec" {
-#    command = "bash eksctl.sh"
-#  }
-#  depends_on = [module.redmine-rds]
-#}
-
-
-###############################################
-# EKS Rds Secrets Setup from AWS Secret Manager
-################################################
-#resource "null_resource" "eks-secrets-hooked-aws-secret-manager" {
-#  provisioner "local-exec" {
-#    command = "bash eks-secrets-creation.sh"
-#  }
-#  depends_on = [null_resource.eks]
-#}
-
-
-#############################
-# EKS ALB Ingress Deployment
-#############################
-#resource "null_resource" "eks-alb-ingress-controller" {
-#  provisioner "local-exec" {
-#    command = "bash alb-ingress.sh"
-#  }
-#  depends_on = [null_resource.eks]
-#}
-
-    
-####################
-# EKS EBS CSI Driver
-####################
-#resource "null_resource" "ebs-csi-controller" {
-#  
-#  provisioner "local-exec" {
-#    command = "bash ebs-csi-driver.sh"
-#  }
-#  depends_on = [null_resource.eks]
-#}
-    
-

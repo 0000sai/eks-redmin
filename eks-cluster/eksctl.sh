@@ -1,8 +1,7 @@
 #!/bin/bash
 
-
 EKS_CLUSTER_NAME="cloudgeeks-ca-eks"
-EKS_VERSION="1.21"
+EKS_VERSION="1.20"
 REGION="us-east-1"
 NODE_TYPE="t3a.medium"
 TOTAL_NODES="1"
@@ -10,7 +9,6 @@ MIN_NODES="1"
 MAX_NOES="2"
 NODE_VOLUME_SIZE_IN_GB="30"
 SSH_KEY_NAME="cloudgeeks-ca-eks"
-KMS_KEY_ID=$(aws kms describe-key --key-id alias/readmines | awk -F ':' '{print $6}' | cut -f2 -d "/" | awk '{print $1}')
 
 
 PRIVATE_SUBNET_1=`terraform output private-subnets-ids | sed -n 2p | cut -d'"' -f2`
@@ -64,25 +62,8 @@ eksctl create cluster \
   --managed \
   --asg-access \
   --verbose 3
-
-
-
-
-# EKS Secrets with KMS
-# eksctl utils enable-secrets-encryption --cluster=kms-cluster --key-arn=arn:aws:kms:us-west-2:<account>:key/<key> --region=<region>
-
-
-# aws kms describe-key --key-id alias/readmines
-# Note: Key is created through terraform
-#if [ "$?" = "0" ]
-#then
-#eksctl utils enable-secrets-encryption --cluster=${EKS_CLUSTER_NAME} --key-arn=arn:aws:kms:${REGION}:${AWS_ACCOUNT}:key/${KMS_KEY_ID} --region=${REGION}
-#fi
-
   
 # aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $REGION
-
-
 
 
 # UPDATE YOUR ./kube
