@@ -21,7 +21,8 @@
 4. Resources Provisioned VPC, RDS, KMS, AWS Secrets,EKS CLUSTER, EKS Manged Nodes
 
 # MYSQL Client
-# Connect to MYSQL Database (Make Sure to Allow WorkerNodeSG in RDS SG)
+# Connect to MYSQL Database 
+(Make Sure to Allow WorkerNodeSG in RDS SG)
 kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h redmine-db.cpyuhbq10eou.us-east-1.rds.amazonaws.com -u dbadmin -p12345678
 
 # Verify Database
