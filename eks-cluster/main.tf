@@ -22,9 +22,9 @@ terraform {
 
 # Create S3 Bucket with Versioning enabled
 
-# aws s3api create-bucket --bucket cloudgeeksca-terraform --region us-east-1
+# aws s3api create-bucket --bucket cloudgeeks-terraform --region us-east-1
 
-# aws s3api put-bucket-versioning --bucket cloudgeeksca-terraform --versioning-configuration Status=Enabled
+# aws s3api put-bucket-versioning --bucket cloudgeeks-terraform --versioning-configuration Status=Enabled
 
 #############
 # S3 Backend
@@ -32,7 +32,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "cloudgeeksca-terraform"
+    bucket         = "cloudgeeks-terraform"
     key            = "cloudgeeks-staging.tfstate"
     region         = "us-east-1"
   #  dynamodb_table = "dev-cloudgeeks"
@@ -96,8 +96,8 @@ module "rds-mysql" {
   source                                                           = "../../../modules/aws-rds-mysql"
   namespace                                                        = "cloudgeeks.ca"
   stage                                                            = "dev"
-  name                                                             = "redmine-db"
-  rds-name                                                         = "redmine-db"
+  db-name                                                          = "redmine"
+  rds-identifier                                                   = "redmine"
   final-snapshot-identifier                                        = "redmine-db-final-snap-shot"
   skip-final-snapshot                                              = "true"
   rds-allocated-storage                                            = "5"
@@ -115,7 +115,7 @@ module "rds-mysql" {
   deletion-protection                                              = "false"
   vpc-security-group-ids                                           = [module.redmine-rds.aws_security_group_default]
   subnet_ids                                                       = module.vpc.database_subnets
-  db-subnet-group-name                                             = "readmines"
+  db-subnet-group-name                                             = "readmine"
 }
 
 

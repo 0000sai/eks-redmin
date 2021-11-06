@@ -28,10 +28,6 @@ variable "attributes" {
   description = "Additional attributes (e.g. `1`)"
 }
 
-variable "name" {
-  description = "Name to be used on all the resources as identifier"
-  default     = ""
-}
 
 
 variable "tags" {
@@ -43,7 +39,11 @@ variable "tags" {
 
 #RDS VARIABLES
 
-variable "rds-name" {
+variable "db-name" {
+  default = ""
+}
+
+variable "rds-identifier" {
   default = ""
 }
 

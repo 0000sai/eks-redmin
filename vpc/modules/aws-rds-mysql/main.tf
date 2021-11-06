@@ -4,7 +4,6 @@
 module "label" {
   source     = "../terraform-label"
   namespace  = var.namespace
-  name       = var.name
   stage      = var.stage
   delimiter  = var.delimiter
   attributes = var.attributes
@@ -16,7 +15,8 @@ module "label" {
 
 
 resource "aws_db_instance" "db" {
-  identifier                                               = var.rds-name
+  name                                                     = var.db-name
+  identifier                                               = var.rds-identifier
   final_snapshot_identifier                                = var.final-snapshot-identifier
   allocated_storage                                        = var.rds-allocated-storage
   storage_type                                             = var.storage-type
