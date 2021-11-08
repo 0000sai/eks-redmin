@@ -22,9 +22,9 @@ terraform {
 
 # Create S3 Bucket with Versioning enabled
 
-# aws s3api create-bucket --bucket cloudgeeks-terraform --region us-east-1
+# aws s3api create-bucket --bucket cloudgeeksca-terraform --region us-east-1
 
-# aws s3api put-bucket-versioning --bucket cloudgeeks-terraform --versioning-configuration Status=Enabled
+# aws s3api put-bucket-versioning --bucket cloudgeeksca-terraform --versioning-configuration Status=Enabled
 
 #############
 # S3 Backend
@@ -32,7 +32,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "cloudgeeks-terraform"
+    bucket         = "cloudgeeksca-terraform"
     key            = "cloudgeeks-staging.tfstate"
     region         = "us-east-1"
   #  dynamodb_table = "dev-cloudgeeks"
@@ -45,7 +45,7 @@ terraform {
 #######
 
 module "vpc" {
-  source = "../modules/vpc"
+  source = "../../modules/vpc"
   vpc-location                        = "Virginia"
   namespace                           = "cloudgeeks.ca"
   name                                = "vpc"
@@ -64,27 +64,27 @@ module "vpc" {
 # Secret Manager
 ################
 module "rds_secret" {
-  source               = "../modules/aws-secret-manager"
+  source               = "../../modules/aws-secret-manager"
   namespace            = "cloudgeeks.ca"
   stage                = "dev"
-  name                 = "readmine-rds-creds"
+  name                 = "redmine-rds-creds"
   secret-string         = {
     username             = "dbadmin"
     password             = var.secret-manager
     engine               = "mysql"
     host                 = module.rds-mysql.rds-end-point
     port                 = "3306"
-    dbInstanceIdentifier = "readmine-db"
+    dbInstanceIdentifier = module.rds-mysql.rds-identifier
   }
   kms_key_id             = module.kms_rds-mysql_key.key_id
 }
 
 module "kms_rds-mysql_key" {
-  source                  = "../modules/aws-kms"
+  source                  = "../../modules/aws-kms"
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "rds-mysql-key"
-  alias                   = "alias/readmines"
+  alias                   = "alias/redmine"
   deletion_window_in_days = "10"
 }
 
@@ -93,7 +93,7 @@ module "kms_rds-mysql_key" {
 ### RDS ##
 ############
 module "rds-mysql" {
-  source                                                           = "../modules/aws-rds-mysql"
+  source                                                           = "../../modules/aws-rds-mysql"
   namespace                                                        = "cloudgeeks.ca"
   stage                                                            = "dev"
   db-name                                                          = "redmine"
@@ -125,7 +125,7 @@ module "rds-mysql" {
 ### Security Groups ###
 #######################
 module "redmine-web-sq" {
-  source              = "../modules/aws-sg-cidr"
+  source              = "../../modules/aws-sg-cidr"
   namespace           = "cloudgeeks.ca"
   stage               = "dev"
   name                = "redmine"
@@ -137,7 +137,7 @@ module "redmine-web-sq" {
 
 
 module "redmine-rds" {
-  source                  = "..//modules/aws-sg-ref-v2"
+  source                  = "../../modules/aws-sg-ref-v2"
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "redmine-Rds"
@@ -146,6 +146,7 @@ module "redmine-rds" {
   security_group_name     = "DBSec"
   vpc_id                  = module.vpc.vpc-id
 }
+
 
 ########################
 # EKS Cluster Deployment
