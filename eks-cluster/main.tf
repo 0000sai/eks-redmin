@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
- #    version = "3.37.0"
+      #    version = "3.37.0"
     }
   }
 }
@@ -35,7 +35,7 @@ terraform {
     bucket         = "cloudgeeksca-terraform"
     key            = "cloudgeeks-staging.tfstate"
     region         = "us-east-1"
-  #  dynamodb_table = "dev-cloudgeeks"
+    #  dynamodb_table = "dev-cloudgeeks"
 
   }
 }
@@ -45,7 +45,7 @@ terraform {
 #######
 
 module "vpc" {
-  source = "../../modules/vpc"
+  source = "../modules/vpc"
   vpc-location                        = "Virginia"
   namespace                           = "cloudgeeks.ca"
   name                                = "vpc"
@@ -64,7 +64,7 @@ module "vpc" {
 # Secret Manager
 ################
 module "rds_secret" {
-  source               = "../../modules/aws-secret-manager"
+  source               = "../modules/aws-secret-manager"
   namespace            = "cloudgeeks.ca"
   stage                = "dev"
   name                 = "redmine-rds-creds"
@@ -80,7 +80,7 @@ module "rds_secret" {
 }
 
 module "kms_rds-mysql_key" {
-  source                  = "../../modules/aws-kms"
+  source                  = "../modules/aws-kms"
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "rds-mysql-key"
@@ -93,7 +93,7 @@ module "kms_rds-mysql_key" {
 ### RDS ##
 ############
 module "rds-mysql" {
-  source                                                           = "../../modules/aws-rds-mysql"
+  source                                                           = "../modules/aws-rds-mysql"
   namespace                                                        = "cloudgeeks.ca"
   stage                                                            = "dev"
   db-name                                                          = "redmine"
@@ -125,7 +125,7 @@ module "rds-mysql" {
 ### Security Groups ###
 #######################
 module "redmine-web-sq" {
-  source              = "../../modules/aws-sg-cidr"
+  source              = "../modules/aws-sg-cidr"
   namespace           = "cloudgeeks.ca"
   stage               = "dev"
   name                = "redmine"
@@ -137,7 +137,7 @@ module "redmine-web-sq" {
 
 
 module "redmine-rds" {
-  source                  = "../../modules/aws-sg-ref-v2"
+  source                  = "../modules/aws-sg-ref-v2"
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "redmine-Rds"
