@@ -22,9 +22,9 @@ terraform {
 
 # Create S3 Bucket with Versioning enabled
 
-# aws s3api create-bucket --bucket cloudgeeks-terraform --region us-east-1
+# aws s3api create-bucket --bucket cloudgeeksca-terraform --region us-east-1
 
-# aws s3api put-bucket-versioning --bucket cloudgeeks-terraform --versioning-configuration Status=Enabled
+# aws s3api put-bucket-versioning --bucket cloudgeeksca-terraform --versioning-configuration Status=Enabled
 
 #############
 # S3 Backend
@@ -32,7 +32,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "cloudgeeks-terraform"
+    bucket         = "cloudgeeksca-terraform"
     key            = "cloudgeeks-staging.tfstate"
     region         = "us-east-1"
   #  dynamodb_table = "dev-cloudgeeks"
@@ -67,14 +67,14 @@ module "rds_secret" {
   source               = "../../modules/aws-secret-manager"
   namespace            = "cloudgeeks.ca"
   stage                = "dev"
-  name                 = "readmine-rds-creds"
+  name                 = "redmine-rds-creds"
   secret-string         = {
     username             = "dbadmin"
     password             = var.secret-manager
     engine               = "mysql"
     host                 = module.rds-mysql.rds-end-point
     port                 = "3306"
-    dbInstanceIdentifier = "readmine-db"
+    dbInstanceIdentifier = module.rds-mysql.rds-identifier
   }
   kms_key_id             = module.kms_rds-mysql_key.key_id
 }
@@ -84,7 +84,7 @@ module "kms_rds-mysql_key" {
   namespace               = "cloudgeeks.ca"
   stage                   = "dev"
   name                    = "rds-mysql-key"
-  alias                   = "alias/readmines"
+  alias                   = "alias/redmine"
   deletion_window_in_days = "10"
 }
 
