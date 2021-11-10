@@ -80,4 +80,11 @@ helm upgrade -install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
 
 kubectl get all -A
 
+# Aws-Secret-Manager Secret CSI Driver
+
+kubectl apply -f secrets-store-csi-driver
+
+kubectl apply -f aws-provider-installer
+
+
 # End
