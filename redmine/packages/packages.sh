@@ -21,6 +21,14 @@ apt install python3-pip -y
 pip3 install --upgrade --user awscli
 
 
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+aws --version
+
+
+
 # EKSCTL
 
 # 1. Download and extract the latest release of eksctl with the following command.
