@@ -22,9 +22,9 @@ terraform {
 
 # Create S3 Bucket with Versioning enabled
 
-# aws s3api create-bucket --bucket cloudgeeksca-terraform --region us-east-1
+# aws s3api create-bucket --bucket cloudgeeks-terraform --region us-east-1
 
-# aws s3api put-bucket-versioning --bucket cloudgeeksca-terraform --versioning-configuration Status=Enabled
+# aws s3api put-bucket-versioning --bucket cloudgeeks-terraform --versioning-configuration Status=Enabled
 
 #############
 # S3 Backend
@@ -32,7 +32,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "cloudgeeksca-terraform"
+    bucket         = "cloudgeeks-terraform"
     key            = "cloudgeeks-staging.tfstate"
     region         = "us-east-1"
   #  dynamodb_table = "dev-cloudgeeks"
