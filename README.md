@@ -12,7 +12,7 @@
 
 # Prerequisites
 
-1. ACM Setup with your domain
+1. ACM Setup with your domain (Optional)
 
 2. packages Installed in provided packages.sh
 
