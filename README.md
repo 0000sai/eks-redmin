@@ -8,6 +8,7 @@
 4. Terraform Kms
 5. Terraform Eks-Drivers-(EBS-CSI + SecretStore-CSI)
 6. Terraform ALB-Ingress-Setup
+# AWS SecretManager
 7. Eks-Application/SecretsDecryption-OIDC
 
 # Prerequisites
