@@ -1,0 +1,21 @@
+# https://eksctl.io/usage/iamserviceaccounts/
+
+# https://docs.aws.amazon.com/eks/latest/userguide/create-service-account-iam-policy-and-role.html
+
+eksctl utils associate-iam-oidc-provider --cluster=cloudgeeksca-eks --approve --region us-east-1
+
+eksctl create iamserviceaccount \
+    --name <kubernetes_service_account_name> \
+    --namespace <kubernetes_service_account_namespace> \
+    --cluster <cluster_name> \
+    --attach-policy-arn <IAM_policy_ARN> \
+    --approve \
+    --override-existing-serviceaccounts
+    
+############################################    
+# Note: Provide the Policy ARN
+############################################
+
+ eksctl utils associate-iam-oidc-provider --cluster=cloudgeeksca-eks --approve --region us-east-1
+    
+ eksctl create iamserviceaccount --name redmine --namespace redmine --cluster cloudgeeksca-eks --attach-policy-arn arn:aws:iam::038855800565:policy/Redmine-Svc
