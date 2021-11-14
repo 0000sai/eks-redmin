@@ -20,4 +20,4 @@ eksctl create iamserviceaccount \
 
  eksctl utils associate-iam-oidc-provider --cluster=cloudgeeksca-eks --approve --region us-east-1
     
- eksctl create iamserviceaccount --name redmine --namespace redmine --cluster cloudgeeksca-eks --attach-policy-arn arn:aws:iam::038855800565:policy/Redmine-Svc
+ eksctl create iamserviceaccount --name redmine --namespace redmine --cluster cloudgeeksca-eks --attach-policy-arn arn:aws:iam::838123562970:policy/Redmine-Crds
