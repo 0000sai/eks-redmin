@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  namespace: redmine
+  labels:
+    app: redmine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redmine
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: redmine
+        tier: frontend
+    spec:
+      serviceAccountName: redmine        # Very Important, name of the Service Account
+      containers:
+        - image: quickbooks2018/redmine:latest
+          imagePullPolicy: Always
+          name: redmine
+          env:
+          - name: REDMINE_DB_MYSQL   # Rds Endpoint
+            value: redmine.crz8bfdntkkc.us-east-1.rds.amazonaws.com
+          - name: REDMINE_DB_USERNAME         # REDMINE_DB_USERNAME
+            value: dbadmin
+
+          - name: REDMINE_DB_PASSWORD_ASIM                          # REDMINE_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redmine-creds            # Object Name
+                key: REDMINE_RDS_CRDS            # KEY
+
+          - name: REDMINE_SECRET_KEY_BASE_ASIM                          # REDMINE_SECRET_KEY_BASE
+            valueFrom:
+              secretKeyRef:
+                name: redmine-creds             # Object Name
+                key: REDMINE_RDS_CRDS   # KEY
+
+
+          ports:
+            - containerPort: 3000
+              name: http
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          volumeMounts:
+            - name: password
+              mountPath: /mnt/password
+              readOnly: true
+      volumes:
+        - name: password
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: aws-secrets
+
+
+---
+
+# We need service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine
+  namespace: redmine
+  labels:
+    app: redmine
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /login
+#   For Fargate Or Direct Pod Access
+    alb.ingress.kubernetes.io/target-type: ip        
+spec:
+  type: NodePort
+  selector:
+    app: redmine
+  ports:
+    - port: 80
+      targetPort: 3000

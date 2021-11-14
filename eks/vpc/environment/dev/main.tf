@@ -40,6 +40,16 @@ terraform {
   }
 }
 
+###################
+# Eks Cluster Name  # Update Eks Cluster Environment Variables ---> Do it Manually  # source EKS.env
+###################
+#resource "null_resource" "eks-cluster-environment-variables" {
+#  provisioner "local-exec" {
+#    interpreter = ["/bin/bash", "-c"]    # Interpreter
+#    command = "source EKS.env"
+#  }
+#}
+
 #######
 # Vpc
 #######
@@ -56,7 +66,7 @@ module "vpc" {
   vpc-public-subnet-cidr              = ["10.11.16.0/20","10.11.32.0/20","10.11.48.0/20"]
   vpc-private-subnet-cidr             = ["10.11.64.0/20","10.11.80.0/20","10.11.96.0/20"]
   vpc-database_subnets-cidr           = ["10.11.112.0/20", "10.11.128.0/20","10.11.144.0/20"]
-  cluster-name                        = "cloudgeeks-ca-eks"
+  cluster-name                        = var.EKS_CLUSTER_NAME
 
 }
 

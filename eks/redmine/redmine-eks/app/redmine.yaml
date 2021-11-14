@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redmine
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: redmine
+        tier: frontend
+    spec:
+      containers:
+        - image: redmine:latest
+          imagePullPolicy: Always
+          name: redmine
+          env:
+            - name: REDMINE_DB_MYSQL   # Rds Endpoint
+              valueFrom:
+                secretKeyRef:
+                  name: redmine-db-mysql # Rds Endpoint
+                  key: REDMINE_DB_MYSQL   # Rds Endpoint
+
+            - name: REDMINE_DB_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: redmine-db-password
+                  key: REDMINE_DB_PASSWORD     # redmine DB Password
+
+            - name: REDMINE_SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: redmine-secret-key
+                  key: REDMINE_SECRET_KEY_BASE
+
+            - name: REDMINE_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rds-admin
+                  key: REDMINE_DB_USERNAME      
+
+          ports:
+            - containerPort: 3000
+              name: http
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+
+---
+
+# We need service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /login
+#   For Fargate Or Direct Pod Access
+    alb.ingress.kubernetes.io/target-type: ip        
+spec:
+  type: NodePort
+  selector:
+    app: redmine
+  ports:
+    - port: 80
+      targetPort: 3000

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Purpose: Setup EBS CSI Driver
 
-AWS_ACCOUNT="274736243942"          # Update This
+AWS_ACCOUNT="153787536644"          # Update This
 
 # https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
 
@@ -87,7 +87,5 @@ cd secret-manager
 kubectl apply -f secrets-store-csi-driver
 
 kubectl apply -f aws-provider-installer
-
-
 
 # End
