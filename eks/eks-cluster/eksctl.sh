@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./EKS.env
+
 
 TF_VAR_EKS_CLUSTER_NAME=${EKS_CLUSTER_NAME}
 TF_VAR_EKS_VERSION=${EKS_VERSION}
