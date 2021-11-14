@@ -172,9 +172,9 @@ resource "null_resource" "eks-alb-ingress-controller" {
 }
 
 
-####################
-# EKS EBS CSI Driver
-####################
+#################################
+# EKS EBS/SecretStore CSI Driver
+#################################
 resource "null_resource" "ebs-csi-controller" {
 
   provisioner "local-exec" {
