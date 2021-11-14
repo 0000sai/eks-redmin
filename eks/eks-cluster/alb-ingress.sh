@@ -1,7 +1,7 @@
 #!/bin/bash
 # Purpose: alb ingress setup via helm3
 
-EKS_CLUSTER_NAME="cloudgeeks-ca-eks"
+EKS_CLUSTER_NAME="${EKS_CLUSTER_NAME}"
 
 helm version --short
 
