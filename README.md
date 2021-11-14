@@ -6,7 +6,7 @@
 2. Terraform Eks(eksctl)
 3. Terraform Rds
 4. Terraform Kms
-5. Terraform Eks-Driver-EBS-CSI
+5. Terraform Eks-Drivers-(EBS-CSI + SecretStore-CSI)
 6. Terraform ALB-Ingress-Setup
 7. Eks-Application/SecretsDecryption
 
