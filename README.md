@@ -1,5 +1,15 @@
 # Redmine AWS EKS Setup
 
+# Deployments 
+
+1. Terraform Vpc
+2. Terraform Eks(eksctl)
+3. Terraform Rds
+4. Terraform Kms
+5. Terraform Eks-Driver-EBS-CSI
+6. Terraform ALB-Ingress-Setup
+7. Eks-Application/SecretsDecryption
+
 # Prerequisites
 
 1. ACM Setup with your domain
