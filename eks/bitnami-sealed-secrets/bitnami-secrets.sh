@@ -1,0 +1,62 @@
+# https://github.com/bitnami-labs/sealed-secrets   # For Latest Always Use These Links
+
+# https://github.com/bitnami-labs/sealed-secrets/releases/tag/v0.16.0  # For Latest Always Use These Links
+
+#################################
+ # Client Side mean kubeseaL CLI
+#################################
+################
+# Installation
+################
+
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-linux-amd64 -O kubeseal
+install -m 755 kubeseal /usr/local/bin/kubeseal
+
+
+###########################
+# Kubernetes Cluster side
+############################
+# Install SealedSecret CRD, server-side controller into kube-system namespace.
+
+kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/controller.yaml
+
+
+###################
+# Sealing secrets #
+###################
+
+source RDS.env
+
+kubectl create namespace redmine
+
+kubectl get ns
+
+##########
+# Dry Run
+##########
+kubectl -n redmine create secret generic redmine-rds-creds \
+  --dry-run=client \
+  --from-literal=REDMINE_DB_MYSQL=${REDMINE_DB_MYSQL}  \
+  --from-literal=REDMINE_DB_USERNAME=${REDMINE_DB_USERNAME} \
+  --from-literal=REDMINE_DB_PASSWORD=${REDMINE_DB_PASSWORD}  \
+  --from-literal=REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE} \
+  --from-literal=MYSQL_DATABASE=${MYSQL_DATABASE} \
+  --output json
+
+kubectl -n redmine create secret generic redmine-rds-creds \
+  --dry-run=client \
+  --from-literal=REDMINE_DB_MYSQL=${REDMINE_DB_MYSQL}  \
+  --from-literal=REDMINE_DB_USERNAME=${REDMINE_DB_USERNAME} \
+  --from-literal=REDMINE_DB_PASSWORD=${REDMINE_DB_PASSWORD}  \
+  --from-literal=REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE} \
+  --from-literal=MYSQL_DATABASE=${MYSQL_DATABASE} \
+  --output json \
+  | kubeseal \
+  | tee redmine-secret.yaml
+
+# Now you can Put this file in Github---> redmine-secret.yaml
+
+
+kubectl get secrets/redmine-rds-creds -o yaml -n redmine
+
+kubeseal --fetch-cert
