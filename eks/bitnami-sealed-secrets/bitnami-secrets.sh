@@ -57,6 +57,9 @@ kubectl -n redmine create secret generic redmine-rds-creds \
 # Now you can Put this file in Github---> redmine-secret.yaml
 
 
+kubectl -n redmine apply -f redmine-secret.yaml
+
+
 kubectl get secrets/redmine-rds-creds -o yaml -n redmine
 
 kubeseal --fetch-cert
