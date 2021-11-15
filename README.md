@@ -11,6 +11,9 @@
 # AWS SecretManager
 7. Eks-Application/SecretsDecryption-OIDC
 
+# Bitnami Sealed Secrets
+8. Bitnami Sealed Secrets 
+
 # Prerequisites
 
 1. ACM Setup with your domain (Optional)
