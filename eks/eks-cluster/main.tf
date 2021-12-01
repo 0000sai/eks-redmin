@@ -154,6 +154,7 @@ module "redmine-rds" {
 ########################
 resource "null_resource" "eks" {
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     command = "bash eksctl.sh"
   }
   depends_on = [module.redmine-rds]
@@ -166,6 +167,7 @@ resource "null_resource" "eks" {
 #############################
 resource "null_resource" "eks-alb-ingress-controller" {
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     command = "bash alb-ingress.sh"
   }
   depends_on = [null_resource.eks]
@@ -178,6 +180,7 @@ resource "null_resource" "eks-alb-ingress-controller" {
 resource "null_resource" "csi-controllers" {
 
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     command = "bash csi-drivers.sh"
   }
   depends_on = [null_resource.eks]
