@@ -42,5 +42,26 @@ kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h 
 # Verify Database
 mysql> show schemas;
 
+#######################################
+# Creds Create these in Secret Manager
+#######################################
+
+# Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
+
+REDMINE_DB_USERNAME=dbadmin         ---> # Create these in Secret Manager
+REDMINE_DB_PASSWORD=12345678        ---> # Create these in Secret Manager
+REDMINE_SECRET_KEY_BASE=12345678    ---> # Create these in Secret Manager
+REDMINE_DB_MYSQL                    ---> # Create these in Secret Manager        # Rds Endpoint
+
+rds-secrets
+
+export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_USERNAME"' | cut -f2 -d '"')
+
+export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_PASSWORD"' | cut -f2 -d '"')
+
+export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_SECRET_KEY_BASE"' | cut -f2 -d '"')
+
+export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
+
 
 5. Terraform Destroy
