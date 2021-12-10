@@ -48,10 +48,13 @@ mysql> show schemas;
 
 # Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
 
-REDMINE_DB_USERNAME=dbadmin         ---> Create these in Secret Manager
-REDMINE_DB_PASSWORD=12345678        ---> Create these in Secret Manager
-REDMINE_SECRET_KEY_BASE=12345678    ---> Create these in Secret Manager
-REDMINE_DB_MYSQL                    ---> Create these in Secret Manager       ---> Rds Endpoint
+1. REDMINE_DB_USERNAME=dbadmin         ---> Create these in Secret Manager
+
+2. REDMINE_DB_PASSWORD=12345678        ---> Create these in Secret Manager
+
+3. REDMINE_SECRET_KEY_BASE=12345678    ---> Create these in Secret Manager
+
+4. REDMINE_DB_MYSQL                    ---> Create these in Secret Manager       ---> Rds Endpoint
 
 rds-secrets
 
