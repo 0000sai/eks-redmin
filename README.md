@@ -42,9 +42,9 @@ kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h 
 # Verify Database
 mysql> show schemas;
 
-#######################################
-# Creds Create these in Secret Manager
-#######################################
+############################################################################################
+# Creds Create these in Secret Manager & Attach a ReadOnly policy with WorkerNodeGroup Role
+############################################################################################
 
 # Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
 
