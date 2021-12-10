@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  namespace: redmine
+  labels:
+    app: redmine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redmine
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: redmine
+        tier: frontend
+    spec:
+      containers:
+        - name: redmine
+          image: quickbooks2018/redmine:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+
+
+---
+
+# We need service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine
+  namespace: redmine
+  labels:
+    app: redmine
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /login
+#   For Fargate Or Direct Pod Access
+    alb.ingress.kubernetes.io/target-type: ip        
+spec:
+  type: NodePort
+  selector:
+    app: redmine
+  ports:
+    - port: 80
+      targetPort: 3000
