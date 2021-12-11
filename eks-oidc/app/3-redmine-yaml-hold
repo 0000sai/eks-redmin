@@ -19,7 +19,7 @@ spec:
     spec:
       serviceAccountName: redmine        # Very Important, name of the Service Account
       containers:
-        - image: quickbooks2018/redmine:latest
+        - image: quickbooks2018/redmine:secrets
           imagePullPolicy: Always
           name: redmine
           env:
