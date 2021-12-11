@@ -39,8 +39,6 @@ spec:
               secretKeyRef:
                 name: redmine-creds             # Object Name
                 key: REDMINE_RDS_CRDS   # KEY
-
-
           ports:
             - containerPort: 3000
               name: http
