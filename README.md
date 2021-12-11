@@ -67,4 +67,14 @@ export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id
 export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
 
 
+# Secrets Mounting
+
+export REDMINE_DB_USERNAME=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $2}' | cut -f2 -d '"')
+
+export REDMINE_DB_PASSWORD=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $4}' | cut -f2 -d '"')
+
+export REDMINE_SECRET_KEY_BASE=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $6}' | cut -f2 -d '"')
+
+export REDMINE_DB_MYSQL=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $8}' | cut -f2 -d '"')
+
 5. Terraform Destroy
