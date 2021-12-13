@@ -1,0 +1,5 @@
+terraform apply -target null_resource.eks -auto-approve
+
+terraform apply -target null_resource.eks-alb-ingress-controller -auto-approve
+
+terraform apply -target null_resource.csi-controllers -auto-approve
