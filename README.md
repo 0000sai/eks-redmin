@@ -77,4 +77,116 @@ export REDMINE_SECRET_KEY_BASE=$(cat /mnt/password/redmine-creds | awk -F [:,] '
 
 export REDMINE_DB_MYSQL=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $8}' | cut -f2 -d '"')
 
+## Example Secrets/Configmaps
+```example
+Sample ConfigMap declaration form.
+
+cat <<EOF > configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+     name: credentials
+     namespace: learning
+data:
+     username: root
+     password: password
+EOF
+     
+Creating ConfigMap using an imperative method.
+
+Method 1.
+
+kubectl -n learning create configmap asim-credentials  \
+               --from-literal=username=root \
+               --from-literal=password=password \
+               --from-literal=shell=bash
+               
+Method 2.
+
+Create a feeder file.
+
+vi ref.txt
+
+username: root
+password: password
+
+Create ConfigMap.
+
+kubectl -n learning create configmap family-credentials \
+               --from-file=ref.txt
+               
+Sample Pod Definition File.
+
+1.Fetching environment variables from a ConfigMap object.
+
+cat <<EOF > configmap-test.yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+   name: configmap-test-1
+   namespace: learning
+spec:
+   containers:
+     - name: nginx
+       image: nginx:alpine
+       env: ############################################# difference
+         - name: CONFIG_SHELL_TEST
+           valueFrom:
+             configMapKeyRef:
+                   name: credentials
+                   key: password
+EOF
+
+kubectl apply -f configmap-test.yaml          
+ 
+ 
+
+2.Injecting a ConfigMap 'key-values' to the environment of a Pod.
+
+cat <<EOF > configmap-test2.yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+   name: configmap-test-2
+   namespace: learning
+spec:
+   containers:
+     - name: nginx
+       image: nginx:alpine     
+       envFrom: ############################################# difference
+        - configMapRef:
+             name: credentials                  
+EOF
+
+kubectl apply -f configmap-test2.yaml               
+                   
+                   
+                   
+                   
+3.Mapping the ConfigMap in a Pod.
+
+cat <<EOF > configmap-test3.yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+   name: configmap-test-3
+   namespace: learning
+spec:
+   containers:
+     - name: nginx
+       image: nginx:alpine     
+       volumeMounts: ############################################# difference
+           - name: cm-mount     # must match
+             mountPath: /configmap
+             readOnly: true
+   volumes:
+      - name: cm-mount            # must match
+        configMap:
+            name: credentials
+EOF
+
+kubectl apply -f configmap-test3.yaml 
+
+```
+
 5. Terraform Destroy
