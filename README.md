@@ -14,7 +14,7 @@
 # Bitnami Sealed Secrets
 8. Bitnami Sealed Secrets 
 
-# Prerequisites
+- Prerequisites
 
 1. ACM Setup with your domain (Optional)
 
@@ -24,7 +24,7 @@
 
 4. VsCode (Optional)
 
-# Steps
+- Steps
 
 1. cd eks/environment/dev
 
@@ -34,17 +34,17 @@
 
 4. Resources Provisioned VPC, RDS, KMS, AWS Secrets,EKS CLUSTER, EKS Manged Nodes
 
-# MYSQL Client
-# Connect to MYSQL Database 
-# Make Sure to Allow WorkerNodeSG in RDS SG
+## MYSQL Client
+- Connect to MYSQL Database 
+- Make Sure to Allow WorkerNodeSG in RDS SG
 kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h redmine-db.cpyuhbq10eou.us-east-1.rds.amazonaws.com -u dbadmin -p12345678
 
 # Verify Database
 mysql> show schemas;
 
-############################################################################################
-# Creds Create these in Secret Manager & Attach a ReadOnly policy with WorkerNodeGroup Role
-############################################################################################
+
+## Creds Create these in Secret Manager & Attach a ReadOnly policy with WorkerNodeGroup Role
+
 
 # Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
 
@@ -67,8 +67,9 @@ export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id
 export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
 
 
-# Secrets Mounting
+## Secrets Mounting
 
+```secrets
 export REDMINE_DB_USERNAME=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $2}' | cut -f2 -d '"')
 
 export REDMINE_DB_PASSWORD=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $4}' | cut -f2 -d '"')
@@ -76,6 +77,7 @@ export REDMINE_DB_PASSWORD=$(cat /mnt/password/redmine-creds | awk -F [:,] '{pri
 export REDMINE_SECRET_KEY_BASE=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $6}' | cut -f2 -d '"')
 
 export REDMINE_DB_MYSQL=$(cat /mnt/password/redmine-creds | awk -F [:,] '{print $8}' | cut -f2 -d '"')
+```
 
 ## Example Secrets/Configmaps
 ```example
