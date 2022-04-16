@@ -1,6 +1,6 @@
 # Redmine AWS EKS Setup
 
-# Deployments 
+## Deployments 
 
 1. Terraform Vpc
 2. Terraform Eks(eksctl)
@@ -8,10 +8,10 @@
 4. Terraform Kms
 5. Terraform Eks-Drivers-(EBS-CSI + SecretStore-CSI)
 6. Terraform ALB-Ingress-Setup
-# AWS SecretManager
+## AWS SecretManager
 7. Eks-Application/SecretsDecryption-OIDC
 
-# Bitnami Sealed Secrets
+## Bitnami Sealed Secrets
 8. Bitnami Sealed Secrets 
 
 - Prerequisites
@@ -39,14 +39,14 @@
 - Make Sure to Allow WorkerNodeSG in RDS SG
 kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h redmine-db.cpyuhbq10eou.us-east-1.rds.amazonaws.com -u dbadmin -p12345678
 
-# Verify Database
+- Verify Database
 mysql> show schemas;
 
 
 ## Creds Create these in Secret Manager & Attach a ReadOnly policy with WorkerNodeGroup Role
 
 
-# Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
+- Best is to Use Bitnami Sealed Secrets, currently aws does not provide KEY Value
 
 1. REDMINE_DB_USERNAME=dbadmin         ---> Create these in Secret Manager
 
