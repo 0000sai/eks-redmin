@@ -164,9 +164,19 @@ kubectl apply -f configmap-test2.yaml
                    
                    
                    
-                   
+#################################                   
 3.Mapping the ConfigMap in a Pod.
-
+#################################
+cat <<EOF > configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+     name: credentials
+     namespace: learning
+data:
+     username: root
+     password: password
+EOF
 cat <<EOF > configmap-test3.yaml
 apiVersion: v1
 kind: Pod
