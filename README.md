@@ -177,6 +177,7 @@ data:
      username: root
      password: password
 EOF
+
 cat <<EOF > configmap-test3.yaml
 apiVersion: v1
 kind: Pod
