@@ -77,7 +77,7 @@ export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id rds-se
 - rds-secrets with jq
 
 ```secrets
-export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_USERNAME"')
+export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_USERNAME"')
 
 export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_PASSWORD"')
 
