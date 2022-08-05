@@ -65,25 +65,25 @@ kubectl run -n cloudgeeks -it --rm --image=curlimages/curl --restart=Never curl-
 rds-secrets with regex
 
 ```secrets
-export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_USERNAME"' | cut -f2 -d '"')
+export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_USERNAME"' | cut -f2 -d '"')
 
-export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_PASSWORD"' | cut -f2 -d '"')
+export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_PASSWORD"' | cut -f2 -d '"')
 
-export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_SECRET_KEY_BASE"' | cut -f2 -d '"')
+export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_SECRET_KEY_BASE"' | cut -f2 -d '"')
 
-export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
+export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
 ```
 
 - rds-secrets with jq
 
 ```secrets
-export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_USERNAME"')
+export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_USERNAME"')
 
-export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_PASSWORD"')
+export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_PASSWORD"')
 
-export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_SECRET_KEY_BASE"')
+export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_SECRET_KEY_BASE"')
 
-export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id readmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_MYSQL"')
+export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id redmine-creds --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_MYSQL"')
 
 ```
 
