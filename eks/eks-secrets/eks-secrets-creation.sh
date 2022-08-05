@@ -8,13 +8,13 @@ fi
 
 echo "First, deleting the old secret: -credentials"
 
-kubectl delete secrets -db-mysql || true
+kubectl delete secrets redmine-db-mysql || true
 
 kubectl delete secrets mysql-database || true
 
 kubectl delete secrets rds-admin || true
 
-kubectl delete secrets -db-password  || true
+kubectl delete secrets redmine-db-password  || true
 
 kubectl delete secrets redmine-secret-key || true
 
@@ -31,6 +31,6 @@ kubectl create secret generic rds-admin --from-literal=REDMINE_DB_USERNAME=${RED
 
 kubectl create secret generic redmine-db-password --from-literal=REDMINE_DB_PASSWORD=${REDMINE_DB_PASSWORD} # Rds root
 
-kubectl create secret generic redmine-secret-key --from-literal=REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE} 
+kubectl create secret generic redmine-secret-key --from-literal=REDMINE_SECRET_KEY_BASE=${REDMINE_SECRET_KEY_BASE}
 
 # End
