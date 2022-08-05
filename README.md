@@ -46,7 +46,7 @@ mysql> show schemas;
 - curl pod for trouble shooting
 
 ```curlpod
-kubectl -n cloudgeeks run curl-pod --image=curlimages/curl -i --tty -- sh
+kubectl run -n cloudgeeks -it --rm --image=curlimages/curl --restart=Never curl-pod -- sh
 ```
 
 ## Creds Create these in Secret Manager & Attach a ReadOnly policy with WorkerNodeGroup Role
