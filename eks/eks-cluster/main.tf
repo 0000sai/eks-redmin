@@ -52,7 +52,6 @@ resource "null_resource" "eks" {
     interpreter = ["/bin/bash", "-c"]
     command = "bash eksctl.sh"
   }
-  depends_on = [module.redmine-rds]
 }
 
 
