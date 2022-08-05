@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AWS Secret Manager for RDS
-if [ ! -f ./.env ]; then
+if [ ! -f ./redmine.env ]; then
   echo "File not found .env"
   exit 1
 fi
@@ -21,7 +21,7 @@ kubectl delete secrets redmine-secret-key || true
 
 echo "file found, creating kubernetes secret: -credentials"
 
-source ./.env
+source ./redmine.env
 
 kubectl create secret generic redmine-db-mysql --from-literal=REDMINE_DB_MYSQL=${REDMINE_DB_MYSQL} # Rds Endpoint
 
