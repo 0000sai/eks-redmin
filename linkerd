@@ -61,6 +61,13 @@ kubectl -n emojivoto port-forward svc/web-svc --address 0.0.0.0 8080:80
 
 ssh -N -L 8090:0.0.0.0:8080 cloud_user@35.87.189.111
 
+--------------
+# Mesh default
+--------------
+kubectl get -n default deploy -o yaml \
+  | linkerd inject - \
+  | kubectl apply -f -
+
 ---------------
 # Mesh Demo App
 ---------------
