@@ -62,8 +62,9 @@ kubectl -n cloudgeeks run curl-pod --image=curlimages/curl -i --tty -- sh
 
 4. REDMINE_DB_MYSQL                    ---> Create these in Secret Manager       ---> Rds Endpoint
 
-rds-secrets
+rds-secrets with regex
 
+```secrets
 export REDMINE_DB_USERNAME=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_USERNAME"' | cut -f2 -d '"')
 
 export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_PASSWORD"' | cut -f2 -d '"')
@@ -71,7 +72,20 @@ export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds
 export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_SECRET_KEY_BASE"' | cut -f2 -d '"')
 
 export REDMINE_DB_MYSQL=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq '."REDMINE_DB_MYSQL"' | cut -f2 -d '"')
+```
 
+- rds-secrets with jq
+
+```secrets
+export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_U
+SERNAME"')
+
+export REDMINE_DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_DB_P
+ASSWORD"')
+
+export REDMINE_SECRET_KEY_BASE=$(aws secretsmanager get-secret-value --secret-id rds-secrets --region us-east-1 --query SecretString --output text | jq -r '."REDMINE_SECRET_KEY_BASE"')
+
+```
 
 ## Secrets Mounting
 
