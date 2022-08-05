@@ -83,7 +83,7 @@ kubectl get deployments -n kube-system
 
 kubectl get deployments/aws-load-balancer-controller -o yaml -n kube-system
 
-kubectl get deployments/aws-load-balancer-controller -o yaml -n kube-system \
+kubectl get -n kube-system deployments/aws-load-balancer-controller deploy -o yaml  \
   | linkerd inject - \
   | kubectl apply -f -
 
