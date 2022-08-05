@@ -1,11 +1,11 @@
-output "vpc-id" {
-  value = module.vpc.vpc-id
+output "eks" {
+  value = null_resource.eks
 }
 
-output "public-subnet-ids" {
-  value = module.vpc.public-subnet-ids
+output "eks-alb-ingress-controller" {
+  value = null_resource.eks-alb-ingress-controller
 }
 
-output "private-subnets-ids" {
-  value = module.vpc.private-subnet-ids
+output "ebscsi-secretcsi-controllers" {
+  value = null_resource.ebscsi-secretcsi-controllers
 }
