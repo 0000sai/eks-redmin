@@ -113,7 +113,7 @@ module "rds-mysql" {
   rds-allocated-storage                                            = "5"
   storage-type                                                     = "gp2"
   rds-engine                                                       = "mysql"
-  engine-version                                                   = "5.7.17"
+  engine-version                                                   = "5.7.38"
   db-instance-class                                                = "db.t2.micro"
   backup-retension-period                                          = "0"
   backup-window                                                    = "04:00-06:00"
