@@ -1,0 +1,166 @@
+------------------------
+# Kind Setup AmazonLinux
+------------------------
+https://github.com/quickbooks2018/aws/blob/master/kind-amazonlinux
+
+
+https://linkerd.io/2.11/getting-started/
+
+-------------------------
+# Linerd Cli Installation
+-------------------------
+
+curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install | sh
+
+
+# AmazonLinux
+ln -s ~/.linkerd2/bin/linkerd /usr/bin/linkerd
+
+# Ubuntu
+ln -s ~/.linkerd2/bin/linkerd /usr/local/bin/linkerd
+
+
+linkerd version
+
+---------------------------------------------
+# Install the control plane onto your cluster
+---------------------------------------------
+linkerd install | kubectl apply -f -
+
+linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
+
+
+
+
+linkerd check
+
+-----------------------------------------------------------------------------------------------
+# Let’s install the viz extension, which will install an on-cluster metric stack and dashboard.
+-----------------------------------------------------------------------------------------------
+
+linkerd viz install | kubectl apply -f -
+
+linkerd check
+
+linkerd viz dashboard &
+
+------------
+# ssh tunnel
+---------------
+# Linkerd Panel
+----------------
+ssh -N -L 50750:0.0.0.0:50750 cloud_user@54.183.212.37
+
+----------
+# Demo App
+----------
+curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/emojivoto.yml \
+  | kubectl apply -f -
+
+kubectl -n emojivoto port-forward svc/web-svc --address 0.0.0.0 8080:80
+
+ssh -N -L 8090:0.0.0.0:8080 cloud_user@35.87.189.111
+
+---------------
+# Mesh Demo App
+---------------
+kubectl get -n emojivoto deploy -o yaml \
+  | linkerd inject - \
+  | kubectl apply -f -
+
+
+------------------------------
+# Mesh ALB Balancer Controller
+-------------------------------
+kubectl get deployments -n kube-system
+
+kubectl get deployments/aws-load-balancer-controller -o yaml -n kube-system
+
+kubectl get deployments/aws-load-balancer-controller -o yaml -n kube-system \
+  | linkerd inject - \
+  | kubectl apply -f -
+
+linkerd viz -n kube-system edges deployment
+
+linkerd viz -n kube-system tap deployments/aws-load-balancer-controller
+
+linkerd viz -n kube-system tap deploy
+
+kubectl -n kube-system rollout restart deployment aws-load-balancer-controller
+
+--------------------
+# Mesh cloudgeeksapp
+--------------------
+kubectl get deployments -n default
+
+kubectl get deployments/cloudgeeks-app -o yaml -n default \
+  | linkerd inject - \
+  | kubectl apply -f -
+
+linkerd viz -n default edges deployment
+
+linkerd viz -n default edges po
+
+linkerd viz -n default tap deployments/cloudgeeks-app
+
+linkerd viz -n default tap deploy
+
+kubectl -n default rollout restart deployment cloudgeeks-app
+
+____________________________________________
+# Traffic from ALB Ingress to cloudgeeks-app
+____________________________________________
+linkerd viz -n kube-system tap deployments/aws-load-balancer-controller --to-namespace default
+
+linkerd viz -n kube-system tap deployments/aws-load-balancer-controller --to-namespace default --path / -o json
+
+------
+# mtls
+------
+https://linkerd.io/2.11/features/automatic-mtls/
+
+https://linkerd.io/2.11/tasks/validating-your-traffic/
+
+linkerd viz -n kube-system edges po
+linkerd viz -n kube-system edges deployment
+
+
+linkerd viz -n linkerd edges po
+linkerd viz -n linkerd edges deployment
+
+
+
+linkerd viz edges deployment -A
+linkerd viz edges po -A
+
+
+
+
+linkerd viz -n linkerd tap deploy
+
+kubectl -n linkerd rollout restart deployment linkerd-destination linkerd-identity linkerd-proxy-injector
+
+linkerd viz -n linkerd-viz tap deploy
+
+kubectl -n linkerd-viz rollout restart deployment grafana metrics-api prometheus tap tap-injector web
+
+#####################
+# Removing extensions
+#####################
+To remove any extension, call its uninstall subcommand and pipe it to kubectl delete -f -. For the bundled extensions that means:
+
+# To remove Linkerd Viz
+linkerd viz uninstall | kubectl delete -f -
+
+# To remove Linkerd Jaeger
+linkerd jaeger uninstall | kubectl delete -f -
+
+#############################
+# Removing the control plane
+#############################
+ Note
+
+Uninstallating the control plane requires cluster-wide permissions.
+To remove the control plane, run:
+
+linkerd uninstall | kubectl delete -f -
