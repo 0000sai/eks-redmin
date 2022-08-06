@@ -194,6 +194,10 @@ linkerd jaeger check
 
 kubectl -n redmine set env --all deploy OC_AGENT_HOST=collector.linkerd-jaeger:55678
 
+# To obtain that functionality you need to install (or upgrade) the Linkerd-Viz extension specifying the service exposing the Jaeger UI. By default, this would be something like this:
+
+linkerd viz install --set jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply -f -
+
 linkerd jaeger dashboard &
 
 ############
