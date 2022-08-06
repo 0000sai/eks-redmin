@@ -5,7 +5,7 @@ metadata:
   name: redmine
   labels:
     app: redmine
-  namespace: default
+  namespace: redmine
   annotations:
     # Single ALB Ingress Settings
     kubernetes.io/ingress.class: "alb"
