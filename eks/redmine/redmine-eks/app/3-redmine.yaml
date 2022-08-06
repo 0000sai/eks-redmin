@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redmine
+  namespace: redmine
   labels:
     app: redmine
 spec:
@@ -63,6 +64,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redmine
+  namespace: redmine
   labels:
     app: redmine
   namespace: default
