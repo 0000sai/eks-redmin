@@ -194,4 +194,4 @@ linkerd jaeger check
 
 kubectl -n redmine set env --all deploy OC_AGENT_HOST=collector.linkerd-jaeger:55678
 
-linkerd jaeger dashboard
+linkerd jaeger dashboard &
