@@ -221,5 +221,10 @@ EOF
 kubectl apply -f configmap-test3.yaml 
 
 ```
+- port-forward
+- https://github.com/kubernetes/kubernetes/issues/40053
 
+```portforward
+kubectl port-forward svc/[service-name] -n [namespace] [external-port]:[internal-port] --address='0.0.0.0'
+```
 5. Terraform Destroy
