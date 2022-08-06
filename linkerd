@@ -199,4 +199,4 @@ linkerd jaeger dashboard &
 ############
 port-forward
 ############
-kubectl port-forward service/jaeger -n linkerd-jaeger  --address='0.0.0.0' 9090:14268
+kubectl port-forward service/jaeger -n linkerd-jaeger  --address='0.0.0.0' 9090:16686
