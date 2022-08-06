@@ -21,13 +21,13 @@ metadata:
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
     ## SSL Settings
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:859878781163:certificate/8b76593f-9c01-4d19-9a23-8a4674d91f5a
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:686366197843:certificate/361e6e1d-144b-4c9f-be99-937f34d413bc
     # SSL Redirect Setting
     alb.ingress.kubernetes.io/group.order: '1'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
 spec:
   rules:
-    - host: redmine.saqlainmushtaq.com
+    - host: redmine.cloudgeeks.tk
       http:
         paths:
           - path: /* # SSL Redirect Setting
