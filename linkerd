@@ -67,6 +67,15 @@ ssh -N -L 8090:0.0.0.0:8080 cloud_user@35.87.189.111
 kubectl get -n default deploy -o yaml \
   | linkerd inject - \
   | kubectl apply -f -
+  
+  
+--------------
+# Mesh redmine
+--------------
+kubectl get -n redmine deploy -o yaml \
+  | linkerd inject - \
+  | kubectl apply -f -
+  
 
 ---------------
 # Mesh Demo App
@@ -171,3 +180,16 @@ Uninstallating the control plane requires cluster-wide permissions.
 To remove the control plane, run:
 
 linkerd uninstall | kubectl delete -f -
+
+#####################
+# Distributed-Tracing
+#####################
+# https://linkerd.io/2.11/tasks/distributed-tracing/
+# https://linkerd.io/2.11/reference/cli/jaeger/
+
+
+linkerd jaeger install | kubectl apply -f -
+
+linkerd jaeger check
+
+kubectl -n redmine set env --all deploy OC_AGENT_HOST=collector.linkerd-jaeger:55678
