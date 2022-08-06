@@ -227,6 +227,6 @@ kubectl apply -f configmap-test3.yaml
 ```portforward
 kubectl port-forward svc/[service-name] -n [namespace] [external-port]:[internal-port] --address='0.0.0.0'
 
-kubectl port-forward service/jaeger -n linkerd-jaeger  --address='0.0.0.0' 9090:14268
+kubectl port-forward service/jaeger -n linkerd-jaeger  --address='0.0.0.0' 9090:16686
 ```
 5. Terraform Destroy
