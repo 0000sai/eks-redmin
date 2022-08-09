@@ -192,13 +192,32 @@ linkerd jaeger install | kubectl apply -f -
 
 linkerd jaeger check
 
-kubectl -n redmine set env --all deploy OC_AGENT_HOST=collector.linkerd-jaeger:55678
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Unlike most features of a service mesh, distributed tracing requires modifying the source of your application. Tracing needs some way to tie incoming requests to your application together with outgoing requests to dependent service
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+https://github.com/BuoyantIO/emojivoto/commit/47a026c2e4085f4e536c2735f3ff3788b0870072
 
+###################
+# Install Emojivoto
+####################
+ linkerd inject https://run.linkerd.io/emojivoto.yml | kubectl apply -f -
+ 
+ ########################################################################################
+ # Before moving onto the next step, make sure everything is up and running with kubectl:
+ ########################################################################################
+ kubectl -n emojivoto rollout status deploy/web
+ 
+ kubectl -n emojivoto set env --all deploy OC_AGENT_HOST=collector.linkerd-jaeger:55678
+
+
+#######################################################################################################################################################################################
 # To obtain that functionality you need to install (or upgrade) the Linkerd-Viz extension specifying the service exposing the Jaeger UI. By default, this would be something like this:
-
+#######################################################################################################################################################################################
 linkerd viz install --set jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply -f -
 
 linkerd jaeger dashboard &
+
+OR
 
 ############
 port-forward
