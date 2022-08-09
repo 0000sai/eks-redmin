@@ -40,7 +40,7 @@ linkerd check
 
 linkerd viz install | kubectl apply -f -
 
-linkerd check
+linkerd viz check
 
 linkerd viz dashboard &
 
